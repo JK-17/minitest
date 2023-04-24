@@ -61,6 +61,27 @@ int loadData(Product *p){
 
 
 
-	printf("=> 로딩 성공!\n");
-	return count;
+	char n[30];
+fp = fopen("product.txt", "rt");
+        if(fp == NULL){
+    printf("파일이 없습니다\n");
+    return 0;
+  } else {
+    printf("파일열기 성공\n");
+  }
+
+  for(;count<30;count++){
+    if(feof(fp)){
+      break;
+    }
+    fscanf(fp, "%d", &p[count].weight);
+    fscanf(fp, "%d", &p[count].price);
+    fgets(n,sizeof(n), fp);
+    n[strlen(n) - 1] = '\0';
+    strcpy(p[count].name, n);
+
+  }
+        fclose(fp);
+        printf("=> 로딩 성공!\n");
+        return count-1;
 }
